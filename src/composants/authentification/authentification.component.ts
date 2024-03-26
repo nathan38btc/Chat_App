@@ -60,6 +60,8 @@ export class AuthentificationComponent implements OnInit{
         console.log("user not created !")
       }
     });
+    
+    //this.connexionForm.reset();
   }
 
   onDisconnection(){

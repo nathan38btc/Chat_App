@@ -2,7 +2,7 @@
 
 @for(conversation of myConversation;track conversation.IdConversation; let idx = $index){
 <div>
-    <button (click)="getEntireConversation(conversation.IdConversation)">{{idx+1}} : {{conversation.IdConversation}} </button>
+    <button (click)="getEntireConversation(conversation)">{{idx+1}} : {{conversation.IdConversation}} </button>
 </div>
     
 

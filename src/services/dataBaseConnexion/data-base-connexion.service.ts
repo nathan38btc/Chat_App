@@ -42,4 +42,15 @@ export class DataBaseConnexionService {
 
     return this.http.get<Messages[]>(this.backEndUrl+"my-conversation",options);    
   }
+
+  postNewMessage(IdConversation:number,IdUser:number,Message:string){
+
+    var customParams = new HttpParams().set("IdConversation", IdConversation); // creates the parameters of the request
+    customParams = customParams.append("IdUser",IdUser);
+    customParams = customParams.append("Message",Message);
+    const options = { params: customParams };
+    
+
+    return this.http.post(this.backEndUrl + "message",{},options);
+  }
 }

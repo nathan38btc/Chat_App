@@ -24,7 +24,11 @@ export class ConversationComponent implements OnInit{
   }
 
   myConversation: Conversation[] = [];
-
+  selectedConversation: Conversation = {
+    IdConversation:-1,
+    IdUser1:-1,
+    IdUser2:-1
+  };
   ConversationDetails: Messages[] = [];
 
   newMessageForm = new FormGroup({
@@ -43,11 +47,16 @@ export class ConversationComponent implements OnInit{
     this.dbConnexion.getUserConversation(this.myConnectedUser.Id).subscribe(data=>this.myConversation = data);
   }
 
-  getEntireConversation(IdConversation:number){
-    this.dbConnexion.getConversationWithId(IdConversation).subscribe(data=>this.ConversationDetails=data);
+  getEntireConversation(Conversation:Conversation){
+
+    this.selectedConversation = Conversation;
+    this.dbConnexion.getConversationWithId(Conversation.IdConversation).subscribe(data=>this.ConversationDetails=data);
+
   }
 
   submitContent(){
-    // on est là
+    console.log(this.selectedConversation.IdConversation+ " "+this.myConnectedUser.Id+" "+this.newMessageForm.value.content);
+    this.dbConnexion.postNewMessage(this.selectedConversation.IdConversation,this.myConnectedUser.Id,this.newMessageForm.value.content??'').subscribe(data=> console.log(data));
+    //this.newMessageForm.reset();
   }
 }
