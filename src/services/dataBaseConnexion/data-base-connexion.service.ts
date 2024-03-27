@@ -61,4 +61,13 @@ export class DataBaseConnexionService {
     
     return this.http.post(this.backEndUrl + "createUser",{},options);
   }
+
+
+  getUserWithUsername(username:string){
+
+    var customParams = new HttpParams().set("Username", username);
+    const options = { params: customParams };
+
+    return this.http.get<ConnectedUser[]>(this.backEndUrl + "UserByUsername",options);
+  }
 }

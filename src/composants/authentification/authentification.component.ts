@@ -31,9 +31,9 @@ export class AuthentificationComponent implements OnInit{
   });
 
   createUserForm = new FormGroup({
-    Email: new FormControl(''),
-    username: new FormControl(''),
-    password: new FormControl('')
+    New_Email: new FormControl(''),
+    New_username: new FormControl(''),
+    New_password: new FormControl('')
   });
 
   constructor(private dbConnexion:DataBaseConnexionService,private userdata:UserDataService){}
@@ -76,10 +76,10 @@ export class AuthentificationComponent implements OnInit{
   }
 
   CreatUser(){
-    if(this.createUserForm.value.Email==""||this.createUserForm.value.username==""||this.createUserForm.value.password==""){
+    if(this.createUserForm.value.New_Email==""||this.createUserForm.value.New_username==""||this.createUserForm.value.New_password==""){
       console.log("you must enter every inputs");
     }else{
-      this.dbConnexion.createUser(this.createUserForm.value.Email??"",this.createUserForm.value.username??"",this.createUserForm.value.password??"").subscribe(data=> console.log(data)); 
+      this.dbConnexion.createUser(this.createUserForm.value.New_Email??"",this.createUserForm.value.New_username??"",this.createUserForm.value.New_password??"").subscribe(data=> console.log(data)); 
     }
     this.createUserForm.reset();
   }

@@ -5,7 +5,6 @@ import { ConnectedUser } from '../../interface/connectedUser';
 import { Conversation } from '../../interface/conversation';
 import { Messages } from '../../interface/messages';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { convertToParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-conversation',
@@ -71,10 +70,10 @@ export class ConversationComponent implements OnInit{
 
   submitContent(){
     if(this.myConnectedUser.Id!=-1&&this.myConversation.includes(this.selectedConversation)){
-      console.log(this.selectedConversation.IdConversation+ " "+this.myConnectedUser.Id+" "+this.newMessageForm.value.content);
-      this.dbConnexion.postNewMessage(this.selectedConversation.IdConversation,this.myConnectedUser.Id,this.newMessageForm.value.content??'').subscribe(data=> console.log(data));
+      //console.log(this.selectedConversation.IdConversation+ " "+this.myConnectedUser.Id+" "+this.newMessageForm.value.content);
+      this.dbConnexion.postNewMessage(this.selectedConversation.IdConversation,this.myConnectedUser.Id,this.newMessageForm.value.content??'').subscribe();
       this.newMessageForm.reset();
-      this.getEntireConversation(this.selectedConversation);
+      //this.getEntireConversation(this.selectedConversation);
     }else{
       console.log("I don't think so ")
     }

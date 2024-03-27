@@ -4,11 +4,10 @@
 <div>
     <button (click)="getEntireConversation(conversation)">{{idx+1}} : {{conversation.IdConversation}} </button>
 </div>
-    
-
 }@empty {
     <p>You have no conversation yet</p>
 }
+
 
 @for(messages of ConversationDetails;track messages.Message){
     <p>{{messages.Message}}</p>
