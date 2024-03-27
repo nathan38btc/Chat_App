@@ -5,6 +5,7 @@ import { ConnectedUser } from '../../interface/connectedUser';
 import { Conversation } from '../../interface/conversation';
 import { Messages } from '../../interface/messages';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { convertToParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-conversation',
@@ -16,20 +17,23 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class ConversationComponent implements OnInit{
 
-  myConnectedUser: ConnectedUser ={
+  myConnectedUser: ConnectedUser ={ //user détails
     Id:-1,
     Username:"unconnected",
     password:"unconnected",
     Email:"unconnected"
   }
 
-  myConversation: Conversation[] = [];
-  selectedConversation: Conversation = {
+  myConversation: Conversation[] = []; // conversation
+  ConversationDetails: Messages[] = [];
+
+  selectedConversation: Conversation = { 
     IdConversation:-1,
     IdUser1:-1,
     IdUser2:-1
   };
-  ConversationDetails: Messages[] = [];
+
+  
 
   newMessageForm = new FormGroup({
     content: new FormControl('')
@@ -38,9 +42,17 @@ export class ConversationComponent implements OnInit{
   constructor(private dbConnexion:DataBaseConnexionService,private userdata:UserDataService) {}
   
   ngOnInit(): void {
-    this.userdata.currentUser.subscribe((newUser) => {
+    this.userdata.currentUser.subscribe((newUser) => { // get Central user data 
       this.myConnectedUser = newUser;
     });
+
+    this.userdata.currentConversation.subscribe((newConversation)=> { // get central users conversation
+      this.myConversation = newConversation;
+    });
+
+    this.userdata.currentMessages.subscribe((newConversation)=> { // get central users conversation
+      this.ConversationDetails = newConversation;
+    });   
   }
 
   GetMyConversations(){
@@ -48,15 +60,23 @@ export class ConversationComponent implements OnInit{
   }
 
   getEntireConversation(Conversation:Conversation){
-
-    this.selectedConversation = Conversation;
-    this.dbConnexion.getConversationWithId(Conversation.IdConversation).subscribe(data=>this.ConversationDetails=data);
-
+    if (this.myConnectedUser.Id == -1) {
+      console.log("Connect yourself before sending any messages");
+      
+    }else{
+      this.selectedConversation = Conversation;
+      this.dbConnexion.getConversationWithId(Conversation.IdConversation).subscribe(data=>this.ConversationDetails=data);  
+    }
   }
 
   submitContent(){
-    console.log(this.selectedConversation.IdConversation+ " "+this.myConnectedUser.Id+" "+this.newMessageForm.value.content);
-    this.dbConnexion.postNewMessage(this.selectedConversation.IdConversation,this.myConnectedUser.Id,this.newMessageForm.value.content??'').subscribe(data=> console.log(data));
-    //this.newMessageForm.reset();
+    if(this.myConnectedUser.Id!=-1&&this.myConversation.includes(this.selectedConversation)){
+      console.log(this.selectedConversation.IdConversation+ " "+this.myConnectedUser.Id+" "+this.newMessageForm.value.content);
+      this.dbConnexion.postNewMessage(this.selectedConversation.IdConversation,this.myConnectedUser.Id,this.newMessageForm.value.content??'').subscribe(data=> console.log(data));
+      this.newMessageForm.reset();
+      this.getEntireConversation(this.selectedConversation);
+    }else{
+      console.log("I don't think so ")
+    }
   }
 }

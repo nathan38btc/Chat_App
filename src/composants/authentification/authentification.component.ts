@@ -30,6 +30,12 @@ export class AuthentificationComponent implements OnInit{
     password: new FormControl('')
   });
 
+  createUserForm = new FormGroup({
+    Email: new FormControl(''),
+    username: new FormControl(''),
+    password: new FormControl('')
+  });
+
   constructor(private dbConnexion:DataBaseConnexionService,private userdata:UserDataService){}
 
   ngOnInit(): void {
@@ -61,15 +67,21 @@ export class AuthentificationComponent implements OnInit{
       }
     });
     
-    //this.connexionForm.reset();
+    this.connexionForm.reset();
   }
 
   onDisconnection(){
-
     this.isConnected = false;
+    this.userdata.UserReset();
+  }
 
-    this.userdata.changeUser(-1,"unconnected","unconnected","unconnected")
-
+  CreatUser(){
+    if(this.createUserForm.value.Email==""||this.createUserForm.value.username==""||this.createUserForm.value.password==""){
+      console.log("you must enter every inputs");
+    }else{
+      this.dbConnexion.createUser(this.createUserForm.value.Email??"",this.createUserForm.value.username??"",this.createUserForm.value.password??"").subscribe(data=> console.log(data)); 
+    }
+    this.createUserForm.reset();
   }
 }
 

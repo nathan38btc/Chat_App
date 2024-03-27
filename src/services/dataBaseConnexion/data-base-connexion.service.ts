@@ -50,7 +50,15 @@ export class DataBaseConnexionService {
     customParams = customParams.append("Message",Message);
     const options = { params: customParams };
     
-
     return this.http.post(this.backEndUrl + "message",{},options);
+  }
+
+  createUser(Email:string,username:string,password:string){
+    var customParams = new HttpParams().set("Email", Email); // creates the parameters of the request
+    customParams = customParams.append("Username",username);
+    customParams = customParams.append("password",password);
+    const options = { params: customParams };
+    
+    return this.http.post(this.backEndUrl + "createUser",{},options);
   }
 }

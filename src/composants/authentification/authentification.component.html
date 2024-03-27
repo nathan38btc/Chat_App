@@ -1,7 +1,7 @@
 @if(myConnectedUser.Id ==-1){
     <p>Vous n'etes pas connecter !</p>
 }@else {
-    <h4>Vous etes connecter !</h4>
+    <h4>User Information</h4>
     <p>Connected as : {{this.myConnectedUser.Id}}</p>
     <p>username : {{this.myConnectedUser.Username}}</p>
 }   
@@ -13,6 +13,16 @@
         <label for="password"> password </label>
         <input id="password" type="password" formControlName="password">
         <button type="submit" class="primary"> CONNEXION </button>
+        
+    </form>
+    <form [formGroup]="createUserForm" (submit)="CreatUser()">
+        <label for="Email"> Email </label>
+        <input id="Email" type="text" formControlName="Email">
+        <label for="Username"> Username </label>
+        <input id="Username" type="text" formControlName="username">
+        <label for="password"> password </label>
+        <input id="password" type="password" formControlName="password">
+        <button type="submit"> Create User </button>
     </form>
 </div>
 }
