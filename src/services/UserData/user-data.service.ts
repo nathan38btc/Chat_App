@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ConnectedUser } from '../../interface/connectedUser';
 import { Conversation } from '../../interface/conversation';
 import { Messages } from '../../interface/messages';
+import { json } from 'stream/consumers';
 
 @Injectable({
   providedIn: "root"
@@ -16,6 +17,8 @@ export class UserDataService {
     password:"unconnected",
     Email:"unconnected"
   }
+
+  user:any;
 
   myConversation: Conversation[] = []; // conversation data
   ConversationDetails: Messages[] = [];
@@ -49,6 +52,7 @@ export class UserDataService {
     var blankMessages: Messages[] = [];
     this.MessagesSource.next(blankMessages);
   }
+
 
 
   

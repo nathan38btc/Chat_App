@@ -78,4 +78,8 @@ export class ConversationComponent implements OnInit{
       console.log("I don't think so ")
     }
   }
+
+  isAuthentocated(){
+    console.log(JSON.parse(localStorage.getItem('test')??''));
+  }
 }
