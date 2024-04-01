@@ -5,15 +5,17 @@ import { ConnectedUser } from '../../interface/connectedUser';
 import { Conversation } from '../../interface/conversation';
 import { Messages } from '../../interface/messages';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ChatService } from '../../services/ChatService/chat.service';
 
 @Component({
   selector: 'app-conversation',
   standalone: true,
   imports: [ReactiveFormsModule],
-  providers:[DataBaseConnexionService],
+  providers:[DataBaseConnexionService,ChatService],
   templateUrl: './conversation.component.html',
   styleUrl: './conversation.component.css'
 })
+
 export class ConversationComponent implements OnInit{
 
   myConnectedUser: ConnectedUser ={ //user détails
@@ -32,13 +34,11 @@ export class ConversationComponent implements OnInit{
     IdUser2:-1
   };
 
-  
-
   newMessageForm = new FormGroup({
     content: new FormControl('')
   });
 
-  constructor(private dbConnexion:DataBaseConnexionService,private userdata:UserDataService) {}
+  constructor(private dbConnexion:DataBaseConnexionService,private userdata:UserDataService) {} //, private chatService: ChatService
   
   ngOnInit(): void {
     this.userdata.currentUser.subscribe((newUser) => { // get Central user data 
@@ -79,7 +79,7 @@ export class ConversationComponent implements OnInit{
     }
   }
 
-  isAuthentocated(){
-    console.log(JSON.parse(localStorage.getItem('test')??''));
+  sendMessage(){
+    //this.socket.emit("chat message",this.newMessageForm.value.content);
   }
 }

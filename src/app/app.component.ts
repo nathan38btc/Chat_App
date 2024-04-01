@@ -5,6 +5,8 @@ import { ConversationComponent } from '../composants/Conversation/conversation.c
 import { UserDataService } from '../services/UserData/user-data.service';
 import { SearchBarComponent } from '../composants/search-bar/search-bar.component';
 
+
+
 @Component({
   selector: 'app-root', // pour la partie css 
   standalone: true,

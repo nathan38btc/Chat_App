@@ -11,11 +11,15 @@ import { importProvidersFrom } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 
+//paramétrage du socket
+import { SocketIoModule,SocketIoConfig } from 'ngx-socket-io';
+const urlBackend = 'http://localhost:8000/'
+const config:SocketIoConfig = {url:urlBackend,options:{}};
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), 
+  providers: [provideRouter(routes),
     provideClientHydration(),
-    importProvidersFrom(HttpClientModule),
+    importProvidersFrom(HttpClientModule,SocketIoModule.forRoot(config)),//
     provideHttpClient(withFetch())
     ]
   

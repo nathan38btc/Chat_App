@@ -16,10 +16,8 @@
 }
 
 <div>
-    <form [formGroup]="newMessageForm" (submit)="submitContent()">
+    <form [formGroup]="newMessageForm" (submit)="sendMessage()">
         <label for="message"> Send </label>
         <input id="message" type="text" formControlName="content" >
     </form>
 </div>
-
-<button (click)="isAuthentocated()"> tesst localStorage </button>
