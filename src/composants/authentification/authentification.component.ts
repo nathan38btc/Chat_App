@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ConnectedUser } from '../../interface/connectedUser';
 import { map } from 'rxjs';
 import { UserDataService } from '../../services/UserData/user-data.service';
+import { ChatService } from '../../services/ChatService/chat.service';
 
 @Component({
   selector: 'app-authentification',
@@ -36,7 +37,7 @@ export class AuthentificationComponent implements OnInit{
     New_password: new FormControl('')
   });
 
-  constructor(private dbConnexion:DataBaseConnexionService,private userdata:UserDataService){}
+  constructor(private dbConnexion:DataBaseConnexionService,private userdata:UserDataService,private chatService:ChatService){}
 
   ngOnInit(): void {
     this.userdata.currentUser.subscribe((newUser) => {
@@ -73,6 +74,7 @@ export class AuthentificationComponent implements OnInit{
   onDisconnection(){
     this.isConnected = false;
     this.userdata.UserReset();
+    this.chatService.disconnect();
   }
 
   CreatUser(){
@@ -82,6 +84,10 @@ export class AuthentificationComponent implements OnInit{
       this.dbConnexion.createUser(this.createUserForm.value.New_Email??"",this.createUserForm.value.New_username??"",this.createUserForm.value.New_password??"").subscribe(data=> console.log(data)); 
     }
     this.createUserForm.reset();
+  }
+
+  GetMyConversations(){
+    
   }
 }
 

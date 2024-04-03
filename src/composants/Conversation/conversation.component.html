@@ -1,6 +1,6 @@
 <button (click)="GetMyConversations()">Get my conversations</button>
 
-@for(conversation of myConversation;track conversation.IdConversation; let idx = $index){
+@for(conversation of myConversations;track conversation.IdConversation; let idx = $index){
 <div>
     <button (click)="getEntireConversation(conversation)">{{idx+1}} : {{conversation.IdConversation}} </button>
 </div>
@@ -16,7 +16,7 @@
 }
 
 <div>
-    <form [formGroup]="newMessageForm" (submit)="sendMessage()">
+    <form [formGroup]="newMessageForm" (submit)="submitContent()">
         <label for="message"> Send </label>
         <input id="message" type="text" formControlName="content" >
     </form>

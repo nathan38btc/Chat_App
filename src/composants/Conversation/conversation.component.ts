@@ -6,6 +6,7 @@ import { Conversation } from '../../interface/conversation';
 import { Messages } from '../../interface/messages';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ChatService } from '../../services/ChatService/chat.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-conversation',
@@ -25,7 +26,7 @@ export class ConversationComponent implements OnInit{
     Email:"unconnected"
   }
 
-  myConversation: Conversation[] = []; // conversation
+  myConversations: Conversation[] = []; // conversation
   ConversationDetails: Messages[] = [];
 
   selectedConversation: Conversation = { 
@@ -38,7 +39,7 @@ export class ConversationComponent implements OnInit{
     content: new FormControl('')
   });
 
-  constructor(private dbConnexion:DataBaseConnexionService,private userdata:UserDataService) {} //, private chatService: ChatService
+  constructor(private dbConnexion:DataBaseConnexionService,private userdata:UserDataService, private chatService: ChatService) {} //
   
   ngOnInit(): void {
     this.userdata.currentUser.subscribe((newUser) => { // get Central user data 
@@ -46,40 +47,67 @@ export class ConversationComponent implements OnInit{
     });
 
     this.userdata.currentConversation.subscribe((newConversation)=> { // get central users conversation
-      this.myConversation = newConversation;
+      this.myConversations = newConversation;
     });
 
     this.userdata.currentMessages.subscribe((newConversation)=> { // get central users conversation
       this.ConversationDetails = newConversation;
-    });   
+    }); 
+    
   }
 
   GetMyConversations(){
-    this.dbConnexion.getUserConversation(this.myConnectedUser.Id).subscribe(data=>this.myConversation = data);
+    this.dbConnexion.getUserConversation(this.myConnectedUser.Id).subscribe(data=>this.myConversations = data);
+
+    // creation du socket et connexion
+    this.InitConnexion();
+
+    this.chatService.getMessages().subscribe((data)=>this.dbConnexion.getConversationWithId(this.selectedConversation.IdConversation).subscribe(data=>this.ConversationDetails=data)); // we reSubscirbe to the event of incoming messages
   }
 
   getEntireConversation(Conversation:Conversation){
+    
+    try{ // deconnection of used Socked to connect the new one with IdConversation updated
+      this.chatService.disconnect(); 
+      this.InitConnexion();
+
+      this.selectedConversation = Conversation;
+      }catch(err){
+      console.log(" error during disconnection : " + err);
+    }
+
     if (this.myConnectedUser.Id == -1) {
       console.log("Connect yourself before sending any messages");
-      
     }else{
-      this.selectedConversation = Conversation;
-      this.dbConnexion.getConversationWithId(Conversation.IdConversation).subscribe(data=>this.ConversationDetails=data);  
+      this.dbConnexion.getConversationWithId(Conversation.IdConversation).subscribe(data=>this.ConversationDetails=data);
     }
   }
 
   submitContent(){
-    if(this.myConnectedUser.Id!=-1&&this.myConversation.includes(this.selectedConversation)){
+    if(this.myConnectedUser.Id!=-1&&this.myConversations.includes(this.selectedConversation)){
       //console.log(this.selectedConversation.IdConversation+ " "+this.myConnectedUser.Id+" "+this.newMessageForm.value.content);
-      this.dbConnexion.postNewMessage(this.selectedConversation.IdConversation,this.myConnectedUser.Id,this.newMessageForm.value.content??'').subscribe();
-      this.newMessageForm.reset();
+      //this.dbConnexion.postNewMessage(this.selectedConversation.IdConversation,this.myConnectedUser.Id,this.newMessageForm.value.content??'').subscribe();
+
       //this.getEntireConversation(this.selectedConversation);
+      //envoie du message au socket
+
+      var messageToSend:Messages = {
+        IdConversation:this.selectedConversation.IdConversation,
+        IdUser:this.myConnectedUser.Id,
+        SendAt:"",
+        Message:this.newMessageForm.value.content??''
+      }
+      this.ConversationDetails.push(messageToSend);
+      this.chatService.sendMessage(messageToSend);
+      this.newMessageForm.reset();
     }else{
       console.log("I don't think so ")
+      this.newMessageForm.reset();
     }
   }
 
-  sendMessage(){
-    //this.socket.emit("chat message",this.newMessageForm.value.content);
+  InitConnexion(){
+    this.chatService.initiateSocket(this.selectedConversation.IdConversation.toString(),this.myConnectedUser.Id.toString());
+    this.chatService.getMessages().subscribe((data)=>this.dbConnexion.getConversationWithId(this.selectedConversation.IdConversation).subscribe(data=>this.ConversationDetails=data)); // we reSubscirbe to the event of incoming messages
   }
 }

@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AuthentificationComponent } from './../composants/authentification/authentification.component';
+import { AuthentificationComponent } from '../composants/authentification/authentification.component';
 import { ConversationComponent } from '../composants/Conversation/conversation.component';
 import { UserDataService } from '../services/UserData/user-data.service';
 import { SearchBarComponent } from '../composants/search-bar/search-bar.component';
-
 
 
 @Component({

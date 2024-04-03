@@ -21,6 +21,12 @@ export class UserDataService {
   user:any;
 
   myConversation: Conversation[] = []; // conversation data
+  selectedConversation: Conversation = { 
+    IdConversation:-1,
+    IdUser1:-1,
+    IdUser2:-1
+  };
+
   ConversationDetails: Messages[] = [];
 
   userSource = new BehaviorSubject<ConnectedUser>(this.myConnectedUser);
@@ -53,7 +59,17 @@ export class UserDataService {
     this.MessagesSource.next(blankMessages);
   }
 
+  getCurrentUserInfo(){
+    return this.myConnectedUser;
+  }  
 
 
-  
+  updateCurrentConversation(newCurrentConvrsation:Conversation){
+    this.selectedConversation = newCurrentConvrsation;
+  }
+
+  getCurrentConversation(){
+    return this.selectedConversation;
+  }
+
 }
