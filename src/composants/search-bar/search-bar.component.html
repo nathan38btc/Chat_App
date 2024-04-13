@@ -1,9 +1,12 @@
-<p>search-bar</p>
-
-<form [formGroup]="userToLookFor" (submit)="fetchUser()">
+<form id="searchBar" [formGroup]="userToLookFor" (submit)="fetchUser()">
+    <img id="logo" src="./../../assets/graphicalElements/looking.png">
     <input formControlName="usernameToLookFor">
 </form>
 
 @for(user of userList;track user.Email){
-    <p> {{ user.Username }}</p>
+    <p>    
+        {{ user.Username }} 
+        <button (click)="createConversation(user.Id)"> connect </button>
+    </p>
+    
 }

@@ -20,7 +20,7 @@ export class UserDataService {
 
   user:any;
 
-  myConversation: Conversation[] = []; // conversation data
+  myConversations: Conversation[] = []; // conversation data
   selectedConversation: Conversation = { 
     IdConversation:-1,
     IdUser1:-1,
@@ -32,7 +32,7 @@ export class UserDataService {
   userSource = new BehaviorSubject<ConnectedUser>(this.myConnectedUser);
   currentUser = this.userSource.asObservable();  // subscribe for User Data
 
-  conversationSource = new BehaviorSubject<Conversation[]>(this.myConversation);
+  conversationSource = new BehaviorSubject<Conversation[]>(this.myConversations);
   currentConversation = this.conversationSource.asObservable();  // subscribe for Conversation Liste
 
   MessagesSource = new BehaviorSubject<Messages[]>(this.ConversationDetails);
@@ -47,6 +47,7 @@ export class UserDataService {
       password:_password,
       Email:_email
     }
+    this.myConnectedUser = newConnectedUser;
     this.userSource.next(newConnectedUser);
   } 
 
@@ -62,7 +63,6 @@ export class UserDataService {
   getCurrentUserInfo(){
     return this.myConnectedUser;
   }  
-
 
   updateCurrentConversation(newCurrentConvrsation:Conversation){
     this.selectedConversation = newCurrentConvrsation;

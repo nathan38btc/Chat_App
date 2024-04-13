@@ -85,10 +85,6 @@ export class AuthentificationComponent implements OnInit{
     }
     this.createUserForm.reset();
   }
-
-  GetMyConversations(){
-    
-  }
 }
 
 

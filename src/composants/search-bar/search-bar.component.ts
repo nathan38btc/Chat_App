@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataBaseConnexionService } from '../../services/dataBaseConnexion/data-base-connexion.service';
 import { ConnectedUser } from '../../interface/connectedUser';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { UserDataService } from '../../services/UserData/user-data.service';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-search-bar',
@@ -18,13 +20,20 @@ export class SearchBarComponent {
     usernameToLookFor: new FormControl('')
   });
 
-  constructor(private dbServices:DataBaseConnexionService){
-
-  }
+  constructor(private dbServices:DataBaseConnexionService,private userdata:UserDataService){}
 
 
   fetchUser(){
-    this.dbServices.getUserWithUsername(this.userToLookFor.value.usernameToLookFor??'').subscribe(data=> this.userList =data);
-    this.userToLookFor.reset();
+    if(this.userToLookFor.value.usernameToLookFor == null){
+      this.userList = [];
+    }else{
+      this.dbServices.getUserWithUsername(this.userToLookFor.value.usernameToLookFor??'').subscribe(data=> this.userList =data);
+      this.userToLookFor.reset();
+    }
+
+  }
+
+  createConversation(userChosen:number){
+    this.dbServices.createConversation(this.userdata.getCurrentUserInfo().Id,userChosen);
   }
 }

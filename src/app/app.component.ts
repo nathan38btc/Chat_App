@@ -5,12 +5,11 @@ import { ConversationComponent } from '../composants/Conversation/conversation.c
 import { UserDataService } from '../services/UserData/user-data.service';
 import { SearchBarComponent } from '../composants/search-bar/search-bar.component';
 
-
 @Component({
   selector: 'app-root', // pour la partie css 
   standalone: true,
   imports: [RouterOutlet,AuthentificationComponent,ConversationComponent,SearchBarComponent], // ajouter les modules, composants que le composant utilise
-  providers: [], // ajouter les services que le composants utilise
+  providers: [UserDataService], // ajouter les services que le composants utilise
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -18,5 +17,5 @@ import { SearchBarComponent } from '../composants/search-bar/search-bar.componen
 
 export class AppComponent {
   title = 'Chat_App';
-  constructor (private userData:UserDataService){}
+  constructor (){}
 }

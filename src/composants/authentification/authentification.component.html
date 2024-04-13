@@ -1,20 +1,21 @@
-@if(myConnectedUser.Id ==-1){
-    <p>Vous n'etes pas connecter !</p>
-}@else {
+@if(myConnectedUser.Id !=-1){
     <h4>User Information</h4>
     <p>Connected as : {{this.myConnectedUser.Id}}</p>
-    <p>username : {{this.myConnectedUser.Username}}</p>
-}   
+    <p>username : {{this.myConnectedUser.Username}}</p> 
+}
+
 @if(!isConnected){
 <div>
-    <form [formGroup]="connexionForm" (submit)="submitConnexion()">
+    <!-- Connexion Form -->
+    <form [formGroup]="connexionForm" (submit)="submitConnexion()"> 
         <label for="username"> username </label>
         <input id="username" type="text" formControlName="username">
         <label for="password"> password </label>
         <input id="password" type="password" formControlName="password">
-        <button type="submit" class="primary"> CONNEXION </button>
-        
+        <button type="submit" class="primary"> CONNEXION </button>  
     </form>
+
+    <!-- User creation Form -->
     <form [formGroup]="createUserForm" (submit)="CreatUser()">
         <label for="New_Email"> Email </label>
         <input id="New_Email" type="text" formControlName="New_Email">

@@ -6,7 +6,6 @@ import { Conversation } from '../../interface/conversation';
 import { Messages } from '../../interface/messages';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ChatService } from '../../services/ChatService/chat.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-conversation',
@@ -19,7 +18,7 @@ import { Observable } from 'rxjs';
 
 export class ConversationComponent implements OnInit{
 
-  myConnectedUser: ConnectedUser ={ //user détails
+  myConnectedUser: ConnectedUser ={ //user details
     Id:-1,
     Username:"unconnected",
     password:"unconnected",

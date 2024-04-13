@@ -1,23 +1,23 @@
 <button (click)="GetMyConversations()">Get my conversations</button>
 
-@for(conversation of myConversations;track conversation.IdConversation; let idx = $index){
-<div>
-    <button (click)="getEntireConversation(conversation)">{{idx+1}} : {{conversation.IdConversation}} </button>
+<!-- SideBar  -->
+<div id="sidebar">
+    @for(conversation of myConversations;track conversation.IdConversation; let idx = $index){
+        <div >
+            <button (click)="getEntireConversation(conversation)"> {{conversation.IdConversation}} </button>
+        </div>
+        }@empty {
+            <p>You have no conversation yet</p>
+        }   
 </div>
-}@empty {
-    <p>You have no conversation yet</p>
-}
-
 
 @for(messages of ConversationDetails;track messages.Message){
-    <p>{{messages.Message}}</p>
-}@empty {
-    <p>selectionne une conversation</p>
+    <p id="messages">{{messages.Message}}</p>
 }
 
-<div>
-    <form [formGroup]="newMessageForm" (submit)="submitContent()">
-        <label for="message"> Send </label>
+<div id="body">
+    <form id="form" [formGroup]="newMessageForm" (submit)="submitContent()">
+        <img id="logo" src="./../../assets/graphicalElements/send.png">
         <input id="message" type="text" formControlName="content" >
     </form>
 </div>

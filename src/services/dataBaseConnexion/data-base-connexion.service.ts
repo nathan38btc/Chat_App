@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
 import { ConnectedUser } from '../../interface/connectedUser';
 import { Conversation } from '../../interface/conversation';
 import { Messages } from '../../interface/messages';
-
+import { UserDataService } from '../UserData/user-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class DataBaseConnexionService {
 
   backEndUrl = "http://localhost:8000/";
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private userdata:UserDataService) { }
 
   getAllUser(){
     return this.http.get(this.backEndUrl + "user-list");
@@ -69,5 +69,18 @@ export class DataBaseConnexionService {
     const options = { params: customParams };
 
     return this.http.get<ConnectedUser[]>(this.backEndUrl + "UserByUsername",options);
+  }
+
+  createConversation(user1:number,user2:number){
+
+    if(user1<0||user2<0){
+      return "echec : non connecter";
+    }
+    var customParams = new HttpParams().set("user1",user1 );
+    customParams.append("user2",user2);
+    const options = { params: customParams };
+
+    return this.http.post(this.backEndUrl + "UserByUsername",options); 
+
   }
 }
