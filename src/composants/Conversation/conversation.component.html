@@ -1,14 +1,10 @@
-<button (click)="GetMyConversations()">Get my conversations</button>
-
 <!-- SideBar  -->
 <div id="sidebar">
     @for(conversation of myConversations;track conversation.IdConversation; let idx = $index){
         <div >
             <button (click)="getEntireConversation(conversation)"> {{conversation.IdConversation}} </button>
         </div>
-        }@empty {
-            <p>You have no conversation yet</p>
-        }   
+        }
 </div>
 
 @for(messages of ConversationDetails;track messages.Message){
@@ -21,3 +17,5 @@
         <input id="message" type="text" formControlName="content" >
     </form>
 </div>
+
+<button (click)="GetMyConversations()">Get my conversations</button>

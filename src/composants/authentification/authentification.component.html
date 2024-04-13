@@ -5,7 +5,7 @@
 }
 
 @if(!isConnected){
-<div>
+<div id="connexionForm">
     <!-- Connexion Form -->
     <form [formGroup]="connexionForm" (submit)="submitConnexion()"> 
         <label for="username"> username </label>
