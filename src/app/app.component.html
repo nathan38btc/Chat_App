@@ -1,6 +1,22 @@
 <div id="content">
     <app-search-bar></app-search-bar>
     <app-authentification></app-authentification>
-    <app-conversation></app-conversation>
+    <router-outlet></router-outlet>
 </div>
 
+<div id="sidebar"> 
+    <nav>
+        <a class="button"
+           routerLink="/Public_Conversation"
+           routerLinkActive="activebutton"
+           ariaCurrentWhenActive="page">
+           Public_Conversation
+        </a> |
+        <a class="button"
+           routerLink="/Conversation"
+           routerLinkActive="activebutton"
+           ariaCurrentWhenActive="page">
+           Conversation
+        </a>
+      </nav>
+</div>
