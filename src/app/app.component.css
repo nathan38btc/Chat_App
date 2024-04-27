@@ -27,6 +27,7 @@
     text-decoration: none;
     text-shadow: 0 1px 0 #ffffff;
     outline: 0;
+    width: 5%;
 }
 .activebutton {
     box-shadow: inset 0 1px 0 0 #dcecfb;
@@ -34,4 +35,10 @@
     border: 1px solid #84bbf3;
     color: #ffffff;
     text-shadow: 0 1px 0 #528ecc;
+}
+
+#logo {
+    right: 0%;
+    width: 35px;
+    height: 35px;
 }

@@ -1,1 +1,5 @@
 <p>public-conversation works!</p>
+
+@for (topic of UneDeCouverture; track $index) {
+    <p> {{topic.TopicTitle}} by {{topic.IdUser1}}</p>
+}

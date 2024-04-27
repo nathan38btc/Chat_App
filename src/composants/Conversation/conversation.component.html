@@ -1,7 +1,7 @@
 <!-- SideBar  -->
 <div id="sidebar">
     @for(conversation of myConversations;track conversation.IdConversation; let idx = $index){
-        <div >
+        <div>
             <button (click)="getEntireConversation(conversation)"> {{conversation.IdConversation}} </button>
         </div>
         }

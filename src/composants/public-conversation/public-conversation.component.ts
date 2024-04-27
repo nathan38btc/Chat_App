@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { newTopics } from '../../interface/newTopic';
 
 @Component({
   selector: 'app-public-conversation',
@@ -8,5 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './public-conversation.component.css'
 })
 export class PublicConversationComponent {
-
+  UneDeCouverture: newTopics[] = [] 
 }
