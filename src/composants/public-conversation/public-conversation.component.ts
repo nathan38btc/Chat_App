@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { newTopics } from '../../interface/newTopic';
+import { Component, OnInit } from '@angular/core';
+import { Conversation } from '../../interface/conversation';
+import { DataBaseConnexionService } from '../../services/dataBaseConnexion/data-base-connexion.service';
 
 @Component({
   selector: 'app-public-conversation',
@@ -8,6 +9,19 @@ import { newTopics } from '../../interface/newTopic';
   templateUrl: './public-conversation.component.html',
   styleUrl: './public-conversation.component.css'
 })
-export class PublicConversationComponent {
-  UneDeCouverture: newTopics[] = [] 
+export class PublicConversationComponent implements OnInit{
+  
+  UneDeCouverture: Conversation[] = [];
+
+  constructor(private dbServices: DataBaseConnexionService){}
+
+  ngOnInit(): void {
+      this.getPublicConv();
+  }
+
+  getPublicConv(){
+    this.dbServices.getPublicConversation().subscribe(data=> this.UneDeCouverture = data);
+    
+  }
+  
 }

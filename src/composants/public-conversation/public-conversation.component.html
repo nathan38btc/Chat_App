@@ -1,5 +1,7 @@
-<p>public-conversation works!</p>
-
-@for (topic of UneDeCouverture; track $index) {
-    <p> {{topic.TopicTitle}} by {{topic.IdUser1}}</p>
-}
+<div id="Topics">
+   @for (topic of UneDeCouverture; track $index) {
+    <button> {{topic.topicTitles}} by {{topic.IdUser1}}</button>
+    }@empty{
+        <h1> Wow it's calm uphere !</h1>
+    } 
+</div>

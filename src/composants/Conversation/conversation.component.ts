@@ -31,7 +31,8 @@ export class ConversationComponent implements OnInit{
   selectedConversation: Conversation = { 
     IdConversation:-1,
     IdUser1:-1,
-    IdUser2:-1
+    IdUser2:-1,
+    topicTitles:""
   };
 
   newMessageForm = new FormGroup({
@@ -52,7 +53,9 @@ export class ConversationComponent implements OnInit{
     this.userdata.currentMessages.subscribe((newConversation)=> { // get central users conversation
       this.ConversationDetails = newConversation;
     }); 
+
     
+    this.GetMyConversations();
   }
 
   GetMyConversations(){
@@ -96,7 +99,7 @@ export class ConversationComponent implements OnInit{
         SendAt:"",
         Message:this.newMessageForm.value.content??''
       }
-      this.ConversationDetails.push(messageToSend);
+      this.ConversationDetails.push(messageToSend); // get rid of that : both user should be listening to serveur events
       this.chatService.sendMessage(messageToSend);
       this.newMessageForm.reset();
     }else{

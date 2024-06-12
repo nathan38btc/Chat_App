@@ -4,7 +4,7 @@
         <div>
             <button (click)="getEntireConversation(conversation)"> {{conversation.IdConversation}} </button>
         </div>
-        }
+    }
 </div>
 
 @for(messages of ConversationDetails;track messages.Message){
@@ -17,5 +17,3 @@
         <input id="message" type="text" formControlName="content" >
     </form>
 </div>
-
-<button (click)="GetMyConversations()">Get my conversations</button>

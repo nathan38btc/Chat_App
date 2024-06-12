@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet,RouterLink,RouterLinkActive } from '@angular/router';
 import { AuthentificationComponent } from '../composants/authentification/authentification.component';
 import { ConversationComponent } from '../composants/Conversation/conversation.component';
@@ -15,7 +15,14 @@ import { SearchBarComponent } from '../composants/search-bar/search-bar.componen
 })
 
 
-export class AppComponent {
+export class AppComponent implements OnInit{
+
+  isConnected = false;
   title = 'Chat_App';
-  constructor (){}
+  constructor (private userData:UserDataService){}
+
+  ngOnInit(): void {
+      this.userData.currentisConnected.subscribe(newState => this.isConnected = newState);
+  }
+
 }

@@ -1,7 +1,11 @@
-@if(myConnectedUser.Id !=-1){
-    <h4>User Information</h4>
-    <p>Connected as : {{this.myConnectedUser.Id}}</p>
-    <p>username : {{this.myConnectedUser.Username}}</p> 
+@if(isConnected){
+    <div id="connexionForm">
+        <h4>User Information</h4>
+        <p>Connected as : {{this.myConnectedUser.Id}}</p>
+        <p>username : {{this.myConnectedUser.Username}}</p> 
+
+        <button (click)="onDisconnection()" onclick="window.location='http://localhost:4200/Public_Conversation';"> Disconnect </button>
+    </div>
 }
 
 @if(!isConnected){
@@ -26,9 +30,4 @@
         <button type="submit"> Create User </button>
     </form>
 </div>
-}
-
-@if(isConnected){
-    
-    <button (click)="onDisconnection()"> Disconnect </button>
 }

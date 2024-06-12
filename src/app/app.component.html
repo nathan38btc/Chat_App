@@ -1,3 +1,4 @@
+
 <div id="content">
     <app-search-bar></app-search-bar>
     <app-authentification></app-authentification>
@@ -11,12 +12,14 @@
            routerLinkActive="activebutton"
            ariaCurrentWhenActive="page">
             <img id="logo" src="./../assets/graphicalElements/home.png">
-        </a> |
-        <a class="button"
-           routerLink="/Conversation"
-           routerLinkActive="activebutton"
-           ariaCurrentWhenActive="page">
-           <img id="logo" src="./../assets/graphicalElements/chat.png">
         </a>
+        @if(isConnected){
+            <a class="button"
+                routerLink="/Conversation"
+                routerLinkActive="activebutton"
+                ariaCurrentWhenActive="page">
+                <img id="logo" src="./../assets/graphicalElements/chat.png">
+            </a>
+        }
       </nav>
 </div>

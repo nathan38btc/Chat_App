@@ -43,6 +43,8 @@ export class AuthentificationComponent implements OnInit{
     this.userdata.currentUser.subscribe((newUser) => {
       this.myConnectedUser = newUser;
     });
+
+    this.userdata.currentisConnected.subscribe(newState=> this.isConnected = newState); // litening to central isConnected varaible
   }
 
   getAllUser(){
@@ -53,7 +55,9 @@ export class AuthentificationComponent implements OnInit{
     this.dbConnexion.connectThisUserdb(this.connexionForm.value.username??'',this.connexionForm.value.password??'')
     .pipe(
       map(user => {
-        try{this.isConnected = user.Id !== -1;} // Update isConnected based on user's Id
+        try{ // Update isConnected based on user's Id
+          this.userdata.changeConnectedStates(user.Id !== -1);
+        } 
         catch(err){
           console.log("Please try again");
         }
@@ -72,7 +76,7 @@ export class AuthentificationComponent implements OnInit{
   }
 
   onDisconnection(){
-    this.isConnected = false;
+    this.userdata.changeConnectedStates(false);
     this.userdata.UserReset();
     this.chatService.disconnect();
   }

@@ -83,4 +83,8 @@ export class DataBaseConnexionService {
     return this.http.post(this.backEndUrl + "UserByUsername",options); 
 
   }
+
+  getPublicConversation(){
+    return this.http.get<Conversation[]>(this.backEndUrl + "publicConversation");
+  }
 }

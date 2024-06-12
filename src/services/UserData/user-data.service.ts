@@ -11,6 +11,8 @@ import { json } from 'stream/consumers';
 
 export class UserDataService {
 
+  isConnected = false; 
+
   myConnectedUser: ConnectedUser ={ // User data
     Id:-1,
     Username:"unconnected",
@@ -24,7 +26,8 @@ export class UserDataService {
   selectedConversation: Conversation = { 
     IdConversation:-1,
     IdUser1:-1,
-    IdUser2:-1
+    IdUser2:-1,
+    topicTitles:""
   };
 
   ConversationDetails: Messages[] = [];
@@ -37,6 +40,9 @@ export class UserDataService {
 
   MessagesSource = new BehaviorSubject<Messages[]>(this.ConversationDetails);
   currentMessages = this.MessagesSource.asObservable();  // subscribe for Messages 
+
+  isConnectedSource = new BehaviorSubject<boolean>(this.isConnected);
+  currentisConnected = this.isConnectedSource.asObservable();  // subscribe for Messages 
 
   constructor() { }
 
@@ -72,4 +78,7 @@ export class UserDataService {
     return this.selectedConversation;
   }
 
+  changeConnectedStates(newState:boolean){
+    this.isConnectedSource.next(newState);
+  }
 }
